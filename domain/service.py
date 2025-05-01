@@ -1,18 +1,7 @@
-import sqlite3
-from produto import Produto
-from utils import (
-    OperationCancelled, solicitar_input,
-    validar_int, validar_nome, validar_preco, validar_data
-)
+from domain.produto import Produto
+from domain.validation import OperationCancelled, validar_data, validar_int, solicitar_input, validar_nome, validar_preco
+from persistence.database import conectar
 
-DB = 'produtos.db'
-
-def conectar():
-    return sqlite3.connect(DB)
-
-def criar_tabela():
-    with conectar() as conn:
-        conn.executescript(open('create_table.sql').read())
 
 def listar_produtos():
     with conectar() as conn:
@@ -22,7 +11,7 @@ def listar_produtos():
     else:
         print("\n=== Lista de Produtos ===")
         for r in rows:
-            Produto(*r).exibir()
+            print(Produto(*r))
 
 def buscar_por_id():
     try:
@@ -35,7 +24,7 @@ def buscar_por_id():
         ).fetchone()
     if row:
         print("\n=== Produto Encontrado ===")
-        Produto(*row).exibir()
+        print(Produto(*row))
     else:
         print("Produto não encontrado.")
 

@@ -1,5 +1,6 @@
-from database import (
-    criar_tabela,
+from persistence.database import criar_tabela
+
+from domain.service import (
     listar_produtos,
     buscar_por_id,
     cadastrar_produto,

@@ -17,7 +17,7 @@ def validar_nome(txt):
 def validar_preco(txt):
     try:
         p = float(txt)
-        return p if p >= 0 else None
+        return p if p > 0 else None
     except ValueError:
         return None
 
