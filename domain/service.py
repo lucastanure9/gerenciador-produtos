@@ -1,101 +1,74 @@
 from domain.produto import Produto
-from domain.validation import OperationCancelled, validar_data, validar_int, solicitar_input, validar_nome, validar_preco
 from persistence.database import conectar
 
 
-def listar_produtos():
+def listar_produtos() -> str:
     with conectar() as conn:
         rows = conn.execute("SELECT * FROM produtos").fetchall()
     if not rows:
-        print("Nenhum produto cadastrado.")
-    else:
-        print("\n=== Lista de Produtos ===")
-        for r in rows:
-            print(Produto(*r))
+        return "Nenhum produto cadastrado."
+    lista = [str(Produto(*r)) for r in rows]
+    return "=== Lista de Produtos ===\n" + "\n\n".join(lista)
 
-def buscar_por_id():
-    try:
-        _id = solicitar_input("ID do produto (ou 'sair'): ", validar_int)
-    except OperationCancelled:
-        return
-    with conectar() as conn:
-        row = conn.execute(
-            "SELECT * FROM produtos WHERE id = ?", (_id,)
-        ).fetchone()
-    if row:
-        print("\n=== Produto Encontrado ===")
-        print(Produto(*row))
-    else:
-        print("Produto não encontrado.")
 
-def cadastrar_produto():
-    try:
-        nome = solicitar_input("Nome: ", validar_nome)
-        preco = solicitar_input("Preço: ", validar_preco)
-        data = solicitar_input(
-            "Validade DD-MM-AAAA [opcional]: ",
-            validar_data, permitir_vazio=True
-        )
-        desc = solicitar_input(
-            "Descrição [opcional]: ",
-            lambda t: t.strip(), permitir_vazio=True
-        )
-    except OperationCancelled:
-        print("Cadastro cancelado.")
-        return
-    with conectar() as conn:
-        conn.execute(
-            "INSERT INTO produtos(nome, preco, data_validade, descricao) VALUES(?,?,?,?)",
-            (nome, preco, data, desc)
-        )
-    print("Produto cadastrado com sucesso!")
-
-def atualizar_produto():
-    try:
-        _id = solicitar_input("ID do produto a atualizar (ou 'sair'): ", validar_int)
-    except OperationCancelled:
-        return
+def buscar_por_id(_id: int) -> str:
     with conectar() as conn:
         row = conn.execute(
             "SELECT * FROM produtos WHERE id = ?", (_id,)
         ).fetchone()
     if not row:
-        print("Produto não encontrado.")
-        return
+        return "Produto não encontrado."
+    return "=== Produto Encontrado ===\n" + str(Produto(*row))
 
-    print("Deixe em branco para manter o valor atual, ou digite 'sair' para cancelar.")
+
+def cadastrar_produto(
+    nome: str,
+    preco: float,
+    data_validade: str | None,
+    descricao: str | None
+) -> str:
     try:
-        nome = solicitar_input(f"Nome [{row[1]}]: ", validar_nome)
-        preco = solicitar_input(f"Preço [{row[2]}]: ", validar_preco)
-        data = solicitar_input(
-            f"Validade [{row[3] or '-'}] DD-MM-AAAA: ",
-            validar_data, permitir_vazio=True
-        )
-        desc = solicitar_input(
-            f"Descrição [{row[4] or '-'}]: ",
-            lambda t: t.strip(), permitir_vazio=True
-        )
-    except OperationCancelled:
-        print("Atualização cancelada.")
-        return
+        with conectar() as conn:
+            conn.execute(
+                "INSERT INTO produtos(nome, preco, data_validade, descricao) VALUES(?,?,?,?)",
+                (nome, preco, data_validade, descricao)
+            )
+        return "Produto cadastrado com sucesso!"
+    except Exception:
+        return "Falha ao cadastrar produto."
 
-    nome = nome or row[1]
-    preco = preco if preco is not None else row[2]
-    data = data if data is not None else row[3]
-    desc = desc if desc is not None else row[4]
 
+def atualizar_produto(
+    _id: int,
+    nome: str | None,
+    preco: float | None,
+    data_validade: str | None,
+    descricao: str | None
+) -> str:
     with conectar() as conn:
+        row = conn.execute(
+            "SELECT * FROM produtos WHERE id = ?", (_id,)
+        ).fetchone()
+        if not row:
+            return "Produto não encontrado."
+        current = Produto(*row)
+        nome = nome or current.nome
+        preco = preco if preco is not None else current.preco
+        data_validade = data_validade if data_validade is not None else current.data_validade
+        descricao = descricao if descricao is not None else current.descricao
         conn.execute(
             "UPDATE produtos SET nome=?, preco=?, data_validade=?, descricao=? WHERE id=?",
-            (nome, preco, data, desc, _id)
+            (nome, preco, data_validade, descricao, _id)
         )
-    print("Produto atualizado com sucesso!")
+    return "Produto atualizado com sucesso!"
 
-def deletar_produto():
-    try:
-        _id = solicitar_input("ID do produto a deletar (ou 'sair'): ", validar_int)
-    except OperationCancelled:
-        return
+
+def deletar_produto(_id: int) -> str:
     with conectar() as conn:
+        row = conn.execute(
+            "SELECT * FROM produtos WHERE id = ?", (_id,)
+        ).fetchone()
+        if not row:
+            return "Produto não encontrado."
         conn.execute("DELETE FROM produtos WHERE id=?", (_id,))
-    print("Produto deletado.")
+    return "Produto deletado com sucesso!"
