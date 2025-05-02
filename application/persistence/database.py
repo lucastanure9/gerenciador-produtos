@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from domain.produto import Produto
+from application.domain.produto import Produto
 
 DB = 'produtos.db'
 
@@ -10,4 +10,4 @@ def conectar():
 
 def criar_tabela():
     with conectar() as conn:
-        conn.executescript(open('./persistence/create_table.sql').read())
+        conn.executescript(open('./application/persistence/create_table.sql').read())

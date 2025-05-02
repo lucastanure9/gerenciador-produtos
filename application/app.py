@@ -6,8 +6,8 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-from persistence.database import criar_tabela
-from domain.service import (
+from application.persistence.database import criar_tabela
+from application.domain.service import (
     banco_esta_vazio,
     listar_produtos,
     buscar_por_id,
@@ -15,7 +15,7 @@ from domain.service import (
     atualizar_produto,
     deletar_produto
 )
-from domain.validation import (
+from application.domain.validation import (
     validar_int, validar_nome, validar_preco,
     validar_data, OperationCancelled
 )

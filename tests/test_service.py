@@ -3,7 +3,7 @@ import sqlite3
 import tempfile
 import pytest
 
-from domain.service import (
+from application.domain.service import (
     listar_produtos,
     cadastrar_produto,
     buscar_por_id,

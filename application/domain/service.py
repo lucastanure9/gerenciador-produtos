@@ -6,8 +6,8 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-from domain.produto import Produto
-from persistence.database import conectar
+from application.domain.produto import Produto
+from application.persistence.database import conectar
 
 def banco_esta_vazio():
     return listar_produtos() == "Nenhum produto cadastrado."

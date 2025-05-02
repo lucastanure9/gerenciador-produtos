@@ -1,7 +1,7 @@
 # test_validation.py
 
 import pytest
-from domain.validation import validar_int, validar_nome, validar_preco, validar_data
+from application.domain.validation import validar_int, validar_nome, validar_preco, validar_data
 
 
 def test_validar_int_valido():
