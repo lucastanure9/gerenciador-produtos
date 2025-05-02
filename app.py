@@ -1,24 +1,40 @@
+import logging
+
+logging.basicConfig(
+    filename='app.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
 from persistence.database import criar_tabela
 from domain.service import (
+    banco_esta_vazio,
     listar_produtos,
     buscar_por_id,
     cadastrar_produto,
     atualizar_produto,
     deletar_produto
 )
-from domain.validation import validar_int, validar_nome, validar_preco, validar_data, OperationCancelled
+from domain.validation import (
+    validar_int, validar_nome, validar_preco,
+    validar_data, OperationCancelled
+)
 
 
 def menu():
+    """
+    Loop principal da CLI: exibe o menu, lê a opção do usuário e dispara
+    as ações de CRUD. Cria a tabela se não existir.
+    """
+    
     criar_tabela()
 
     def solicitar_input(prompt, validator, permitir_vazio=False):
-        """Prompt repetido até ter valor válido ou o usuário digitar 'sair'.
+        """Prompt repete até ter valor válido ou o usuário digitar 'sair'.
     - prompt: string para input()
     - validator: função que recebe string, retorna valor convertido ou None
     - permitir_vazio: se True, ENTER vazio retorna None sem validar
         """
-
         while True:
             txt = input(prompt).strip()
             if txt.lower() == 'sair':
@@ -30,17 +46,19 @@ def menu():
                 return val
             print("Entrada inválida. Tente novamente ou digite 'sair' para cancelar.")
 
-    # wrappers para coletar inputs e chamar os serviços com parâmetros
     def opcao_listar():
         mensagem = listar_produtos()
         print(mensagem)
 
     def opcao_buscar():
+        if banco_esta_vazio():
+            print("Nenhum produto cadastrado. Não é possível buscar.")
+            return
         try:
-            _id = solicitar_input("ID do produto (ou 'sair'): ", validar_int)
+            produto_id = solicitar_input("ID do produto (ou 'sair'): ", validar_int)
         except OperationCancelled:
             return
-        mensagem = buscar_por_id(_id)
+        mensagem = buscar_por_id(produto_id)
         print(mensagem)
 
     def opcao_cadastrar():
@@ -60,8 +78,11 @@ def menu():
         print(mensagem)
 
     def opcao_atualizar():
+        if banco_esta_vazio():
+            print("Nenhum produto cadastrado. Não é possível atualizar.")
+            return
         try:
-            _id = solicitar_input("ID do produto a atualizar (ou 'sair'): ", validar_int)
+            produto_id = solicitar_input("ID do produto a atualizar (ou 'sair'): ", validar_int)
         except OperationCancelled:
             return
         try:
@@ -76,15 +97,18 @@ def menu():
         except OperationCancelled:
             print("Atualização cancelada.")
             return
-        mensagem = atualizar_produto(_id, nome, preco, data, desc)
+        mensagem = atualizar_produto(produto_id, nome, preco, data, desc)
         print(mensagem)
 
     def opcao_deletar():
+        if banco_esta_vazio():
+            print("Nenhum produto cadastrado. Não é possível deletar.")
+            return
         try:
-            _id = solicitar_input("ID do produto a deletar (ou 'sair'): ", validar_int)
+            produto_id = solicitar_input("ID do produto a deletar (ou 'sair'): ", validar_int)
         except OperationCancelled:
             return
-        mensagem = deletar_produto(_id)
+        mensagem = deletar_produto(produto_id)
         print(mensagem)
 
     acoes = {

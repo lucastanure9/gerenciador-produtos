@@ -1,0 +1,29 @@
+2025-05-01 17:44:54,176 - INFO - Listagem de produtos: nenhum produto encontrado.
+2025-05-01 17:45:08,880 - WARNING - Produto não encontrado (id=1)
+2025-05-01 17:46:39,267 - INFO - Produto cadastrado: nome=pao, preco=2.0, validade=None, descricao=None
+2025-05-01 17:46:44,398 - INFO - Listagem de produtos: 1 encontrados.
+2025-05-01 17:46:49,762 - INFO - Produto deletado (id=1)
+2025-05-01 17:46:53,067 - WARNING - Tentativa de deletar produto inexistente (id=1)
+2025-05-01 17:47:10,555 - INFO - Listagem de produtos: nenhum produto encontrado.
+2025-05-01 17:55:27,178 - WARNING - Tentativa de atualizar produto inexistente (id=0)
+2025-05-01 18:02:42,125 - INFO - Listagem de produtos: nenhum produto encontrado.
+2025-05-01 18:03:34,651 - INFO - Listagem de produtos: nenhum produto encontrado.
+2025-05-01 18:03:38,606 - INFO - Listagem de produtos: nenhum produto encontrado.
+2025-05-01 18:03:42,796 - INFO - Listagem de produtos: nenhum produto encontrado.
+2025-05-01 18:03:49,863 - INFO - Listagem de produtos: nenhum produto encontrado.
+2025-05-01 18:03:55,866 - INFO - Produto cadastrado: nome=1, preco=12.0, validade=None, descricao=None
+2025-05-01 18:04:05,258 - INFO - Listagem de produtos: 1 encontrados.
+2025-05-01 18:04:08,204 - WARNING - Tentativa de deletar produto inexistente (id=1)
+2025-05-01 18:04:15,602 - INFO - Listagem de produtos: 1 encontrados.
+2025-05-01 18:04:30,988 - INFO - Listagem de produtos: 1 encontrados.
+2025-05-01 18:04:31,781 - INFO - Produto deletado (id=2)
+2025-05-01 18:04:57,704 - INFO - Produto cadastrado: nome=lista, preco=2.0, validade=10-02-2023, descricao=1000
+2025-05-01 18:05:00,146 - INFO - Listagem de produtos: 1 encontrados.
+2025-05-02 01:31:59,418 - INFO - Listagem de produtos: 1 encontrados.
+2025-05-02 01:32:21,633 - INFO - Produto cadastrado: nome=0, preco=1.0, validade=None, descricao=None
+2025-05-02 01:32:23,859 - INFO - Listagem de produtos: 2 encontrados.
+2025-05-02 01:33:27,103 - INFO - Listagem de produtos: 2 encontrados.
+2025-05-02 01:33:33,848 - INFO - Listagem de produtos: 2 encontrados.
+2025-05-02 01:33:36,606 - WARNING - Tentativa de deletar produto inexistente (id=7)
+2025-05-02 01:33:44,665 - INFO - Listagem de produtos: 2 encontrados.
+2025-05-02 01:33:59,908 - WARNING - Tentativa de atualizar produto inexistente (id=9)
