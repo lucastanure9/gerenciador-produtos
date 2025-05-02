@@ -109,11 +109,50 @@ docker cp <nome-do-container>:/app/app.log ./app.log
 
 ## 8. Testes
 
-Use `pytest` para executar os testes unitários:
+### Requisitos:
+Antes de executar os testes, certifique-se de:
+- Estar na raiz do projeto (`dti_app_produtos`)
+- Ter o Python e o `pytest` instalados
+
+### Passos:
+
+1. (Opcional) Crie e ative um ambiente virtual:
+
+**Windows:**
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+**Linux/macOS:**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+2. Instale as dependências:
+```bash
+pip install -r requirements.txt
+```
+
+3. Defina o PYTHONPATH para garantir que os testes encontrem os módulos:
+
+**Windows (PowerShell):**
+```bash
+$env:PYTHONPATH = "."
+```
+
+**Linux/macOS:**
+```bash
+export PYTHONPATH=.
+```
+
+4. Execute os testes:
 ```bash
 pytest -q
 ```
-Os testes cobrem funcionalidades de CRUD e validações.
+
+Os testes cobrem funcionalidades de CRUD, validações e formatação de dados. Certifique-se de que as pastas `tests/`, `domain/` e `persistence/` contêm arquivos `__init__.py`.
 
 ## 9. Considerações Finais
 
