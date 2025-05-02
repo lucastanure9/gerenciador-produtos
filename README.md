@@ -148,7 +148,7 @@ Antes de executar os testes, certifique-se de:
 **Windows:**
 ```bash
 python -m venv venv
-venv\Scriptsctivate
+venv\Scripts\activate
 ```
 
 **Linux/macOS:**
