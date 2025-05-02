@@ -71,7 +71,7 @@ pytest==8.3.5
 
 ### Usando Python diretamente:
 ```bash
-python app.py
+python -m application.app
 ```
 
 ### Usando Docker:
@@ -138,7 +138,7 @@ docker cp <nome-do-container>:/app/app.log ./app.log
 
 ### Requisitos:
 Antes de executar os testes, certifique-se de:
-- Estar na raiz do projeto (`dti_app_produtos`)
+- Estar na raiz do projeto (`gerenciador-produtos`)
 - Ter o Python e o `pytest` instalados
 
 ### Passos:
@@ -148,7 +148,7 @@ Antes de executar os testes, certifique-se de:
 **Windows:**
 ```bash
 python -m venv venv
-venv\Scripts\activate
+venv\Scriptsctivate
 ```
 
 **Linux/macOS:**
@@ -175,8 +175,15 @@ export PYTHONPATH=.
 ```
 
 4. Execute os testes:
+
+**Forma recomendada (mais robusta):**
 ```bash
-pytest -q
+python -m pytest
+```
+
+**Forma alternativa (se pytest estiver no PATH):**
+```bash
+pytest
 ```
 
 Os testes cobrem funcionalidades de CRUD, validações e formatação de dados. Certifique-se de que as pastas `tests/`, `domain/` e `persistence/` contêm arquivos `__init__.py`.
