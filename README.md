@@ -8,7 +8,34 @@ Esta aplicação é um sistema de gerenciamento de produtos simples desenvolvido
 - Gerenciamento de dependências com `pip`
 - Docker (imagem baseada em `python:3.11-slim`)
 
-## 3. Recursos e Estrutura da Tabela
+## 3. Instalação do Python
+
+Antes de executar a aplicação, certifique-se de ter o **Python 3.11 ou superior** instalado no seu sistema.
+
+### Windows:
+1. Acesse: https://www.python.org/downloads/windows/
+2. Baixe o instalador do Python 3.11 ou superior
+3. Execute o instalador e **marque a opção "Add Python to PATH"**
+4. Clique em "Install Now"
+
+### Linux:
+```bash
+sudo apt update
+sudo apt install python3 python3-pip
+```
+
+### macOS (com Homebrew):
+```bash
+brew install python
+```
+
+Depois de instalado, verifique a versão com:
+```bash
+python --version
+pip --version
+```
+
+## 4. Recursos e Estrutura da Tabela
 A aplicação utiliza um banco SQLite local com a tabela `produtos`:
 
 | Campo          | Tipo de Dado | Obrigatório | Descrição                       |
@@ -19,11 +46,11 @@ A aplicação utiliza um banco SQLite local com a tabela `produtos`:
 | `data_validade`| TEXT         | Não         | Data no formato `DD-MM-AAAA`     |
 | `descricao`    | TEXT         | Não         | Texto livre                      |
 
-## 4. Dependências Necessárias
+## 5. Dependências Necessárias
 
-1. Python 3.11 ou superior
-2. Pip
-3. Docker (opcional)
+1. Python 3.11 ou superior  
+2. Pip  
+3. Docker (opcional)  
 
 ### Instalação via pip
 
@@ -40,7 +67,7 @@ pluggy==1.5.0
 pytest==8.3.5
 ```
 
-## 5. Como Executar a Aplicação
+## 6. Como Executar a Aplicação
 
 ### Usando Python diretamente:
 ```bash
@@ -58,7 +85,7 @@ docker run -it app-produtos
 docker run -it -v %cd%:/app app-produtos
 ```
 
-## 6. Funcionalidades
+## 7. Funcionalidades
 
 ### Menu principal:
 ```
@@ -89,7 +116,7 @@ Nome: Caneta
 ...
 ```
 
-## 7. Logs
+## 8. Logs
 Logs automáticos são registrados no arquivo `app.log`, que é gerado na **raiz do projeto** por padrão.
 
 Se estiver rodando dentro de um contêiner Docker, o arquivo também será criado dentro do contêiner. Para acessá-lo, você pode:
@@ -107,7 +134,7 @@ docker cp <nome-do-container>:/app/app.log ./app.log
 2024-05-01 22:13:10 - INFO - Produto deletado (id=1)
 ```
 
-## 8. Testes
+## 9. Testes
 
 ### Requisitos:
 Antes de executar os testes, certifique-se de:
@@ -154,7 +181,7 @@ pytest -q
 
 Os testes cobrem funcionalidades de CRUD, validações e formatação de dados. Certifique-se de que as pastas `tests/`, `domain/` e `persistence/` contêm arquivos `__init__.py`.
 
-## 9. Considerações Finais
+## 10. Considerações Finais
 
 - A aplicação é simples, testada com pytest, e pode ser executada em qualquer ambiente com Docker ou Python instalado.
 - O sistema previne operações quando o banco está vazio.
